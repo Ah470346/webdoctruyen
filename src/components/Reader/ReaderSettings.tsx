@@ -3,7 +3,10 @@
 import {
   BG_COLOR_PRESETS,
   TEXT_COLOR_PRESETS,
+  FONT_FAMILY_PRESETS,
+  LINE_HEIGHT_PRESETS,
   ReaderTheme,
+  ReaderFontFamily,
 } from "@/lib/useReaderPrefs";
 
 interface ReaderSettingsProps {
@@ -13,12 +16,16 @@ interface ReaderSettingsProps {
   theme: ReaderTheme;
   bgColor: string | null;
   textColor: string | null;
+  fontFamily: ReaderFontFamily;
+  lineHeight: number;
   onIncrease: () => void;
   onDecrease: () => void;
   onToggleTheme: () => void;
   onSetBgColor: (color: string | null) => void;
   onSetTextColor: (color: string | null) => void;
   onResetColors: () => void;
+  onSetFontFamily: (fontFamily: ReaderFontFamily) => void;
+  onSetLineHeight: (lineHeight: number) => void;
   onClose: () => void;
 }
 
@@ -29,12 +36,16 @@ export function ReaderSettings({
   theme,
   bgColor,
   textColor,
+  fontFamily,
+  lineHeight,
   onIncrease,
   onDecrease,
   onToggleTheme,
   onSetBgColor,
   onSetTextColor,
   onResetColors,
+  onSetFontFamily,
+  onSetLineHeight,
   onClose,
 }: ReaderSettingsProps) {
   return (
@@ -63,6 +74,44 @@ export function ReaderSettings({
             >
               A+
             </button>
+          </div>
+        </div>
+
+        <div className="reader-sheet-row">
+          <span>Kiểu chữ</span>
+          <select
+            className="reader-select"
+            value={fontFamily}
+            onChange={(e) =>
+              onSetFontFamily(e.target.value as ReaderFontFamily)
+            }
+            style={{
+              fontFamily: FONT_FAMILY_PRESETS.find((p) => p.id === fontFamily)
+                ?.value,
+            }}
+          >
+            {FONT_FAMILY_PRESETS.map((preset) => (
+              <option key={preset.id} value={preset.id} style={{ fontFamily: preset.value }}>
+                {preset.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="reader-sheet-row">
+          <span>Giãn dòng</span>
+          <div className="reader-option-group">
+            {LINE_HEIGHT_PRESETS.map((preset) => (
+              <button
+                key={preset.id}
+                className={`btn-secondary reader-option-btn${
+                  lineHeight === preset.value ? " active" : ""
+                }`}
+                onClick={() => onSetLineHeight(preset.value)}
+              >
+                {preset.label}
+              </button>
+            ))}
           </div>
         </div>
 

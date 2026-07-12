@@ -1,8 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Noto+Serif:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
+  --font-vietnamese: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-noto-serif: 'Noto Serif', Georgia, serif;
+  --font-lora: 'Lora', Georgia, serif;
+  --font-merriweather: 'Merriweather', Georgia, serif;
+  --font-mono: 'JetBrains Mono', "Courier New", monospace;
 
   /* Theme variables - Sleek Dark Mode (Default) */
   --bg-primary: #09090b;
@@ -1052,6 +1057,7 @@ img {
 .reader-page {
   --reader-font-size: 18px;
   --reader-line-height: 1.8;
+  --reader-font-family: var(--font-sans);
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -1131,6 +1137,7 @@ img {
 .reader-paragraph {
   font-size: var(--reader-font-size);
   line-height: var(--reader-line-height);
+  font-family: var(--reader-font-family);
   color: var(--reader-text-color, var(--text-primary));
   margin-bottom: 20px;
 }
@@ -1293,6 +1300,44 @@ img {
   color: var(--text-secondary);
   min-width: 36px;
   text-align: center;
+}
+
+.reader-option-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reader-option-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.reader-option-btn.active {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: var(--accent-glow);
+}
+
+.reader-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: 8px 32px 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  max-width: 180px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23a1a1aa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.reader-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
 }
 
 .reader-chapter-list {

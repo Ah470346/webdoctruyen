@@ -4,10 +4,19 @@ import { useCallback } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 export type ReaderTheme = "dark" | "light";
+export type ReaderFontFamily =
+  | "sans"
+  | "vietnamese"
+  | "serif"
+  | "noto-serif"
+  | "lora"
+  | "merriweather"
+  | "mono";
 
 export interface ReaderPrefs {
   fontSize: number;
   lineHeight: number;
+  fontFamily: ReaderFontFamily;
   theme: ReaderTheme;
   bgColor?: string | null;
   textColor?: string | null;
@@ -16,6 +25,7 @@ export interface ReaderPrefs {
 const DEFAULT_PREFS: ReaderPrefs = {
   fontSize: 18,
   lineHeight: 1.8,
+  fontFamily: "sans",
   theme: "dark",
   bgColor: null,
   textColor: null,
@@ -24,6 +34,22 @@ const DEFAULT_PREFS: ReaderPrefs = {
 const MIN_FONT_SIZE = 14;
 const MAX_FONT_SIZE = 28;
 const FONT_STEP = 2;
+
+export const FONT_FAMILY_PRESETS: { id: ReaderFontFamily; label: string; value: string }[] = [
+  { id: "sans", label: "Mặc Định (Plus Jakarta Sans)", value: "var(--font-sans)" },
+  { id: "vietnamese", label: "Be Vietnam Pro", value: "var(--font-vietnamese)" },
+  { id: "serif", label: "Playfair Display", value: "var(--font-serif)" },
+  { id: "noto-serif", label: "Noto Serif", value: "var(--font-noto-serif)" },
+  { id: "lora", label: "Lora", value: "var(--font-lora)" },
+  { id: "merriweather", label: "Merriweather", value: "var(--font-merriweather)" },
+  { id: "mono", label: "Monospace", value: "var(--font-mono)" },
+];
+
+export const LINE_HEIGHT_PRESETS = [
+  { id: "tight", label: "Chặt", value: 1.4 },
+  { id: "normal", label: "Vừa", value: 1.8 },
+  { id: "loose", label: "Rộng", value: 2.2 },
+];
 
 export const BG_COLOR_PRESETS = [
   { id: "dark", label: "Tối", value: "#09090b" },
@@ -89,6 +115,16 @@ export function useReaderPrefs() {
     [setPrefs]
   );
 
+  const setFontFamily = useCallback(
+    (fontFamily: ReaderFontFamily) => setPrefs((p) => ({ ...p, fontFamily })),
+    [setPrefs]
+  );
+
+  const setLineHeight = useCallback(
+    (lineHeight: number) => setPrefs((p) => ({ ...p, lineHeight })),
+    [setPrefs]
+  );
+
   return {
     prefs,
     isLoaded,
@@ -98,6 +134,8 @@ export function useReaderPrefs() {
     setBgColor,
     setTextColor,
     resetColors,
+    setFontFamily,
+    setLineHeight,
     canIncreaseFontSize: prefs.fontSize < MAX_FONT_SIZE,
     canDecreaseFontSize: prefs.fontSize > MIN_FONT_SIZE,
   };

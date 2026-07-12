@@ -5,7 +5,7 @@ import { ReaderToolbar } from "@/components/Reader/ReaderToolbar";
 import { ReaderNav } from "@/components/Reader/ReaderNav";
 import { ReaderSettings } from "@/components/Reader/ReaderSettings";
 import { ChapterListDrawer } from "@/components/Reader/ChapterListDrawer";
-import { useReaderPrefs } from "@/lib/useReaderPrefs";
+import { FONT_FAMILY_PRESETS, useReaderPrefs } from "@/lib/useReaderPrefs";
 import { useLibrary } from "@/lib/useLibrary";
 import { Novel, Chapter, ChapterMeta } from "@/lib/types";
 
@@ -25,6 +25,8 @@ export function ChapterReaderClient({ novel, chapter, chapters }: Props) {
     setBgColor,
     setTextColor,
     resetColors,
+    setFontFamily,
+    setLineHeight,
     canIncreaseFontSize,
     canDecreaseFontSize,
   } = useReaderPrefs();
@@ -43,6 +45,9 @@ export function ChapterReaderClient({ novel, chapter, chapters }: Props) {
         {
           "--reader-font-size": `${prefs.fontSize}px`,
           "--reader-line-height": prefs.lineHeight,
+          "--reader-font-family": FONT_FAMILY_PRESETS.find(
+            (preset) => preset.id === prefs.fontFamily
+          )?.value,
           ...(prefs.bgColor ? { "--reader-bg-color": prefs.bgColor } : {}),
           ...(prefs.textColor
             ? { "--reader-text-color": prefs.textColor }
@@ -77,12 +82,16 @@ export function ChapterReaderClient({ novel, chapter, chapters }: Props) {
           theme={prefs.theme}
           bgColor={prefs.bgColor ?? null}
           textColor={prefs.textColor ?? null}
+          fontFamily={prefs.fontFamily}
+          lineHeight={prefs.lineHeight}
           onIncrease={increaseFontSize}
           onDecrease={decreaseFontSize}
           onToggleTheme={toggleTheme}
           onSetBgColor={setBgColor}
           onSetTextColor={setTextColor}
           onResetColors={resetColors}
+          onSetFontFamily={setFontFamily}
+          onSetLineHeight={setLineHeight}
           onClose={() => setSettingsOpen(false)}
         />
       )}
